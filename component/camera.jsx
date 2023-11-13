@@ -6,6 +6,9 @@ import Webcam from 'react-webcam';
 const Camera = ({ onCapture }) => {
   const webcamRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
+  const videoConstraints = {
+    facingMode: 'environment', // Menggunakan kamera belakang
+  };
 
   useEffect(() => {
     if (cameraStarted) {
@@ -44,8 +47,9 @@ const Camera = ({ onCapture }) => {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             width={640}
+            videoConstraints={videoConstraints}
           />
-          <button onClick={capture}>Capture Photo</button>
+          <button onClick={capture} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Capture Photo</button>
         </div>
       )}
     </div>
