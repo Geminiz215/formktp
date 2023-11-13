@@ -12,7 +12,6 @@ const Camera = ({ onCapture }) => {
     setFacingMode((prevFacingMode) =>
       prevFacingMode === 'user' ? 'environment' : 'user'
     );
-    console.log(facingMode)
     console.log(videoConstraints)
   };
 
@@ -62,8 +61,11 @@ const Camera = ({ onCapture }) => {
               facingMode
             }}
           />
-          <button onClick={switchCamera} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-5"'>Switch camera</button>
-          <button onClick={capture} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Capture Photo</button>
+          <div className="flex my-3">
+          <div onClick={switchCamera} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-5"'>Switch camera</div>
+          <div onClick={capture} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Capture Photo</div>
+
+          </div>
         </div>
       )}
     </div>
