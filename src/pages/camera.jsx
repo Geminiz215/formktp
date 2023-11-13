@@ -1,6 +1,6 @@
 // pages/index.js
 import React, { useState } from 'react';
-import Camera from '../../component/camera';
+import BeautyForm from '../../component/testt';
 const Home = () => {
   const [capturedImage, setCapturedImage] = useState(null);
 
@@ -10,14 +10,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Camera App</h1>
-      <Camera onCapture={handleCapture} />
-      {capturedImage && (
-        <div>
-          <h2>Captured Photo</h2>
-          <img src={capturedImage} alt="Captured" />
-        </div>
-      )}
+      <BeautyForm/>
     </div>
   );
 };
