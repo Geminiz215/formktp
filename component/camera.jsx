@@ -59,7 +59,10 @@ const Camera = ({ onCapture }) => {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             width={640}
-            videoConstraints={videoConstraints}
+            videoConstraints={{
+              ...videoConstraints,
+              facingMode
+            }}
           />
           <button onClick={handleClick} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-5"'>Switch camera</button>
           <button onClick={capture} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Capture Photo</button>
