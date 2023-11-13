@@ -6,7 +6,7 @@ import Webcam from 'react-webcam';
 const Camera = ({ onCapture }) => {
   const webcamRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
-  const [facingMode, setFacingMode] = useState('user'); // 'user' for front camera, 'environment' for rear camera
+  const [facingMode, setFacingMode] = useState('environment'); // 'user' for front camera, 'environment' for rear camera
 
   const switchCamera = () => {
     setFacingMode((prevFacingMode) =>
