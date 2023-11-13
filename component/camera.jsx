@@ -4,11 +4,19 @@ import React, { useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
 
 const Camera = ({ onCapture }) => {
+  const FACING_MODE_USER = "user";
+  const FACING_MODE_ENVIRONMENT = "environment";
   const webcamRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
-  const videoConstraints = {
-    facingMode: 'environment', // Menggunakan kamera belakang
-  };
+  const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER);
+
+  const handleClick = React.useCallback(() => {
+    setFacingMode((prevState) =>
+      prevState === FACING_MODE_USER
+        ? FACING_MODE_ENVIRONMENT
+        : FACING_MODE_USER
+    );
+  }, []);
 
   useEffect(() => {
     if (cameraStarted) {
@@ -34,6 +42,10 @@ const Camera = ({ onCapture }) => {
     }
   };
 
+  let videoConstraints = {
+    facingMode: facingMode,
+  };
+
   return (
     <div>
       {!cameraStarted && (
@@ -49,6 +61,7 @@ const Camera = ({ onCapture }) => {
             width={640}
             videoConstraints={videoConstraints}
           />
+          <button onClick={handleClick} className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-5"'>Switch camera</button>
           <button onClick={capture} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Capture Photo</button>
         </div>
       )}
