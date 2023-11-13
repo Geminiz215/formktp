@@ -2,6 +2,7 @@
 import { Router } from 'next/router';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Camera from './camera';
 
 const Index = () => {
   const router = useRouter();
@@ -11,6 +12,12 @@ const Index = () => {
     phoneNumber: '',
     ktpPhoto: null,
   });
+  //camera
+  const [capturedImage, setCapturedImage] = useState(null);
+
+  const handleCapture = (imageSrc) => {
+    setCapturedImage(imageSrc);
+  };  
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -20,7 +27,7 @@ const Index = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Perform actions with form data (e.g., send to server, upload photo, etc.)
@@ -33,8 +40,22 @@ const Index = () => {
       phoneNumber: '',
       ktpPhoto: null,
     });
-   router.push("/finish");
 
+    try {
+      const response = await fetch('http://localhost:3000/api/hello', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log('File uploaded successfully', response);
+      } else {
+        console.error('File upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+   router.push("/finish");
   };
 
   return (
@@ -86,15 +107,16 @@ const Index = () => {
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">KTP Photo:</label>
-          <input
-            type="file"
-            name="ktpPhoto"
-            accept="image/*"
-            onChange={handleChange}
-            className="appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            required
-          />
+          <Camera onCapture={handleCapture} />
+          {capturedImage && (
+          <div>
+            <img src={capturedImage} alt="Captured" />
+         </div>
+           )}
         </div>
+        <div>
+        
+     </div>
 
         <div className="flex w-[100%] justify-center">
         <button
@@ -107,6 +129,6 @@ const Index = () => {
       </form>
     </div>
   );
-};
-
+  
+  }
 export default Index;
