@@ -119,7 +119,7 @@ const Index = () => {
 
         <div className="mb-4 mt-5">
           <p className='text-md mb-2 italic'>"Bangkitkan semangat Pemilu 2024 dengan mengunggah foto mu menggunakan frame seru dari klip.id! Ayo, tunjukkan dukunganmu dengan gaya yang berbeda!"</p>
-          <p className='text-sm'>- Buka link <a href="https://klip.id/hari-pendidikan-nasional-hy4c5yugbqa6" className="text-blue-600 dark:text-blue-500 hover:underline"> disini</a></p>
+          <p className='text-sm'>- Buka link <a href="https://klip.id/prabowo-gibran-2024-loulpt16p9d8" className="text-blue-600 dark:text-blue-500 hover:underline"> disini</a></p>
           <p className='text-sm mb-2'>- upload fotomu menggunakan frame klip.id di bawah sini</p>
           <label htmlFor="file" className="text-md font-medium text-gray-600">
             upload here: 👇🏻
