@@ -9,11 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "faker": "^6.6.6",
+    "formidable": "^3.5.1",
+    "mongodb": "^6.2.0",
+    "multer": "1.4.5-lts.1",
     "next": "14.0.2",
+    "next-connect": "^1.0.0",
     "react": "^18",
+    "react-datepicker": "^4.21.0",
     "react-dom": "^18",
-    "react-webcam": "^7.2.0"
+    "react-icons": "^4.12.0",
+    "react-webcam": "^7.2.0",
+    "recharts": "^2.10.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

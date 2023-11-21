@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './fonts.css';
+
+/* Import other styles if needed */
+
+
 
 :root {
   /* --foreground-rgb: 0, 0, 0;

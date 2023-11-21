@@ -1,22 +1,39 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { connectDB, findAllDocuments, insertDocument } from '../../../conn/conn';
+require('dotenv').config();
 
-export default function handler(req, res) {
+
+
+export default async function  handler(req, res)  {
+  let collection = 'pendukung'
   if (req.method === 'GET') {
-    res.status(200).json({ name: 'John Doe' })
+    try {
+      const documents = await findAllDocuments(collection);
+      return res.status(200).json({ data: documents });
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   } else if (req.method === 'POST') {
-    const { filename } = req.body;
-    const pythonProcess = spawn('python3', ['KTP-OCR/ocr.py', `KTP-OCR/ktpocr/dataset/${filename}`]);
+    try {
+      console.log(req.body)
+      const { name, email, phone, referral, nik, tanggal_lahir, jenis_kelamin, provinsi, kabupaten, desa } = req.body;
+      const result = await insertDocument(collection, {
+        name,
+        email,
+        phone,
+        referral,
+        nik,
+        tanggal_lahir,
+        jenis_kelamin,
+        provinsi,
+        kabupaten,
+        desa,
+      });
 
-    pythonProcess.stdout.on('data', (data) => {
-      console.log(`Python output: ${data}`);
-      res.send(data.toString());
-    });
-  
-    pythonProcess.stderr.on('data', (data) => {
-      console.error(`Error from Python: ${data}`);
-      res.status(500).send(data.toString());
-    });
-  } else if (req.method == 'PUT') {
-    res.send(req)
+      return res.status(201).json({ message: 'Data inserted successfully', data: result });
+    } catch (error) {
+      console.error('Error inserting data:', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 }
