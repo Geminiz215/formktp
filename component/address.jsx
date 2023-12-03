@@ -9,9 +9,13 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
   const [kab, setKab] = useState([]);
 
   useEffect(() => {
-    fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
-      .then((response) => response.json())
-      .then((provinces) => setProvinces(provinces));
+    try {
+      fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+        .then((response) => response.json())
+        .then((provinces) => setProvinces(provinces));
+    } catch (error) {
+      console.log("error :=>", error);
+    }
   }, []);
 
   const handleProvinciesChange = (value) => {

@@ -13,7 +13,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 1) {
         setIsScrolled(false);
       } else {
         setIsScrolled(true);
@@ -33,7 +33,7 @@ export default function Navbar() {
           isScrolled ? "opacity-100 bg-white" : "opacity-0 pointer-events-none"
         )}
       >
-        <div className="flex justify-between sm:justify-start   items-center h-full px-4 2xl:px16">
+        <div className="flex justify-between sm:justify-start   items-center h-full 2xl:px16">
           <Link href="" className=" p-5 ">
             <p className="text-red-900 text-[26px] font-semibold">GERINDRA</p>
             <p className="text-[10px] w-max -tracking-widest">
