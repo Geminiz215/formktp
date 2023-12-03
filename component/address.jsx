@@ -10,7 +10,7 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
 
   useEffect(() => {
     try {
-      fetch(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
+      fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`)
         .then((response) => response.json())
         .then((provinces) => setProvinces(provinces));
     } catch (error) {
@@ -23,7 +23,7 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
     for (let index = 0; index < provinces.length; index++) {
       if (provinces[index].name === value) {
         fetch(
-          `http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinces[index].id}.json`
+          `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinces[index].id}.json`
         )
           .then((response) => response.json())
           .then((regencies) => setCity(regencies));
@@ -36,7 +36,7 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
     for (let index = 0; index < city.length; index++) {
       if (city[index].name === value) {
         fetch(
-          `http://www.emsifa.com/api-wilayah-indonesia/api/districts/${city[index].id}.json`
+          `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${city[index].id}.json`
         )
           .then((response) => response.json())
           .then((districts) => setKab(districts));
