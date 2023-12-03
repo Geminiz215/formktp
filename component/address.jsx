@@ -63,7 +63,7 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
       <RecommendInput
         sendDataToParent={handleKabChange}
         getDataFromParent={kab}
-        text={"Kabupaten"}
+        text={"Kecamatan"}
       />
     </div>
   );
