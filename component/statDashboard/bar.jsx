@@ -58,11 +58,9 @@ const data = [
 
 export default function BarPerprovinsi() {
   return (
-    <div className="w-[100%] h-[450px]">
+    <div className=" h-[450px]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          width={500}
-          height={300}
           data={data}
           margin={{
             top: 5,

@@ -1,17 +1,5 @@
-import React from "react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import React, { useState } from "react";
 import Table from "./statDashboard/table";
-import BarPendukung from "./statDashboard/pie";
 import PiePendukung from "./statDashboard/pie";
 import BarPerprovinsi from "./statDashboard/bar";
 
@@ -42,20 +30,20 @@ export default function Statistic() {
           <h5 className="text-sm text-[#949494]">suara</h5>
         </div>
       </div>
-      <div className="p-4 w-screen">
-        <div className="rounded-md w-full h-full border-[2px] p-2 border-[#ECEEF6]">
+      <div className="p-4 w-screen min-w-fit">
+        <div className="rounded-md border-[2px] p-2 border-[#ECEEF6]">
           <div className="w-[100%] flex flex-row-reverse px-3">
             <p>Filter</p>
           </div>
           <BarPerprovinsi />
         </div>
       </div>
-      <div className="sm:flex w-screen p-4 ">
-        <div className="sm:w-[70%] p-4 sm:mr-4 rounded-[12px] border-[2px] border-[#ECEEF6]">
+      <div className="lg:flex w-screen p-4">
+        <div className="lg:w-[70%] sm:w-[100%] md:w-[70%] mb-5 p-4 lg:mr-4 min-w-fit max-w-screen-sm rounded-[12px] border-[2px] border-[#ECEEF6]">
           <h3 className="text-[20.296px] mb-4">test</h3>
           <Table />
         </div>
-        <div className="sm:w-[41%] p-4 rounded-[12px] border-[2px] border-[#ECEEF6]">
+        <div className="lg:w-[41%] md:w-[41%]  sm:w-[100%] min-w-fit  p-4 rounded-[12px] border-[2px] border-[#ECEEF6]">
           <h3 className="text-[20px]">Rentan Usia</h3>
           <PiePendukung />
         </div>
