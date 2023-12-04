@@ -203,7 +203,7 @@ const Index = ({ referral }) => {
         </div>
         <div className="mb-4">
           <label
-            for="phone-input"
+            htmlFor="phone-input"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
             Phone number:
