@@ -11,22 +11,22 @@ export default function Statistic() {
       <div className="flex space-x-4 p-4 h-[139px]">
         <div className="flex-1 p-4 rounded-[12px] border-[2px] flex flex-col justify-between border-[#ECEEF6]">
           <h5 className="text-sm font-semibold">Total</h5>
-          <h2 className="text-2xl font-inter-italic">2.000</h2>
+          <h2 className="text-2xl ">2.000</h2>
           <h5 className="text-sm text-[#949494]">suara</h5>
         </div>
         <div className="flex-1 p-4 rounded-[12px] border-[2px] flex flex-col justify-between border-[#ECEEF6]">
           <h5 className="text-sm font-semibold">Hari ini</h5>
-          <h2 className="text-2xl font-inter-italic">12.000</h2>
+          <h2 className="text-2xl ">12.000</h2>
           <h5 className="text-sm text-[#949494]">suara</h5>
         </div>
         <div className="flex-1 p-4 rounded-[12px] border-[2px] flex flex-col justify-between border-[#ECEEF6]">
           <h5 className="text-sm font-semibold">Minggu ini</h5>
-          <h2 className="text-2xl font-inter-italic">12.000</h2>
+          <h2 className="text-2xl ">12.000</h2>
           <h5 className="text-sm text-[#949494]">suara</h5>
         </div>
         <div className="flex-1 p-4 rounded-[12px] border-[2px] flex flex-col justify-between border-[#ECEEF6]">
           <h5 className="text-sm font-semibold">Bulan ini</h5>
-          <h2 className="text-2xl font-inter-italic">12.000</h2>
+          <h2 className="text-2xl ">12.000</h2>
           <h5 className="text-sm text-[#949494]">suara</h5>
         </div>
       </div>

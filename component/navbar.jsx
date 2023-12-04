@@ -71,13 +71,10 @@ export default function Navbar() {
               <ul className="mt-3">
                 <Link href="" className="my-10">
                   <li className="ml-10 uppercase hover:border-b text-xl my-5">
-                    Todo list
+                    Form
                   </li>
                   <li className="ml-10 uppercase hover:border-b text-xl my-5">
-                    ABOUT
-                  </li>
-                  <li className="ml-10 uppercase hover:border-b text-xl my-5">
-                    US
+                    Statistics
                   </li>
                 </Link>
               </ul>

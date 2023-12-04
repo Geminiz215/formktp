@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const Dropdown = ({ sendDataToParent, getDataFromParent, test, text }) => {
+const Dropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [Option, setOptions] = useState([]);
@@ -23,7 +23,7 @@ const Dropdown = ({ sendDataToParent, getDataFromParent, test, text }) => {
   };
 
   return (
-    <div className={`inline-block text-left ${test} mr-3`}>
+    <div className={`inline-block text-left  mr-3`}>
       <h3 className="mb-3 text-md font-medium text-gray-900 ">{text}</h3>
       <div>
         <span className="rounded-md shadow-sm">
@@ -33,7 +33,6 @@ const Dropdown = ({ sendDataToParent, getDataFromParent, test, text }) => {
             id="options-menu"
             value={selectedOption || "Select an option"}
             onFocus={handleDropdownFocus}
-            disabled={Option.length === 0}
           />
         </span>
       </div>

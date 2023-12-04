@@ -1,12 +1,8 @@
 // pages/index.js
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Camera from "./camera";
 import axios from "axios";
-import Checked from "./chackbox";
 import DateForm from "./dateForm";
-import Address from "./address";
-import Dropdown from "./address";
 import ProvinceCityDistrictForm from "./address";
 import Gender from "./gender";
 
