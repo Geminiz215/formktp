@@ -1,6 +1,6 @@
 // pages/index.js
 import { useEffect, useState } from "react";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Camera from "./camera";
 import axios from "axios";
 import Checked from "./chackbox";
@@ -11,6 +11,7 @@ import ProvinceCityDistrictForm from "./address";
 import Gender from "./gender";
 
 const Index = ({ referral }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -39,14 +40,6 @@ const Index = ({ referral }) => {
       ...prevData,
       [name]: value,
     }));
-  };
-
-  let formatPhoneNumber = (event) => {
-    const input = event.target;
-    const numericValue = input.value.replace(/\D/g, "");
-    if (!numericValue.startsWith("62")) {
-      input.value = "+62" + numericValue;
-    }
   };
 
   const handleBirthDay = (value) => {
@@ -84,8 +77,6 @@ const Index = ({ referral }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const router = useRouter();
-
     try {
       const response = await axios.post("/api/hello", formData);
       console.log(response);
@@ -105,7 +96,6 @@ const Index = ({ referral }) => {
       kabupaten: "",
       desa: "",
     });
-
     router.push("/finish");
   };
 
@@ -167,28 +157,6 @@ const Index = ({ referral }) => {
         <div className="mb-4">
           <div className="relative z-0 w-full mb-6 group">
             <input
-              type="tel"
-              onChange={handleChange}
-              onInput={formatPhoneNumber}
-              pattern="^\+62\d{9,15}$"
-              name="phone"
-              id="floating_phone"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              placeholder=" "
-              required
-            />
-            <label
-              htmlFor="floating_phone"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Phone number (+6212008867534)
-            </label>
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <div className="relative z-0 w-full mb-6 group">
-            <input
               type="text"
               name="referral"
               id="floating_referral"
@@ -218,12 +186,18 @@ const Index = ({ referral }) => {
             <input
               type="number"
               onChange={handleChange}
-              pattern="^\+62\d{9,15}$"
+              pattern="^\d{16,16}"
               name="nik"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
             />
+            <p
+              id="helper-text-explanation"
+              class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+            >
+              Cantumkan NIK asli
+            </p>
             <label
               htmlFor="floating_phone"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -231,6 +205,43 @@ const Index = ({ referral }) => {
               NIK
             </label>
           </div>
+        </div>
+        <div className="mb-4">
+          <label
+            for="phone-input"
+            class="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Phone number:
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 19 18"
+              >
+                <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              name="phone"
+              id="phone-input"
+              aria-describedby="helper-text-explanation"
+              onChange={handleChange}
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="[1-9]\d{11,13}"
+              placeholder="081234560987"
+              required
+            />
+          </div>
+          <p
+            id="helper-text-explanation"
+            class="mt-2 text-sm text-gray-500 dark:text-gray-400"
+          >
+            Sesuaikan dengan format di atas
+          </p>
         </div>
         <DateForm
           selectedDate={formData.tangal_lahir}

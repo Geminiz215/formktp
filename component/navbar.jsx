@@ -48,7 +48,7 @@ export default function Navbar() {
               className="block w-[100%] rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <div onClick={handler} className="sm:hidden cursor-pointer pl-24">
+          <div onClick={handler} className="sm:hidden cursor-pointer pr-5">
             {menuOpen ? (
               <AiOutlineClose size={25} />
             ) : (
