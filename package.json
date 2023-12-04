@@ -12,8 +12,6 @@
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
-    "faker": "^6.6.6",
-    "formidable": "^3.5.1",
     "mongodb": "^6.2.0",
     "multer": "1.4.5-lts.1",
     "next": "14.0.2",

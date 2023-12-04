@@ -1,52 +1,20 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+export default async function connectDB() {
+  const url = process.env.MONGODB_URI;
 
-let client;
-let database;
+  const dbName = process.env.MONGODB_DB;
 
-if (!client) {
-  client = new MongoClient(uri, options);
-}
+  try {
+    const client = await MongoClient.connect(url, { useNewUrlParser: true });
 
-export async function connectDB() {
-  await client.connect();
-  database = client.db(process.env.MONGODB_DB);
-  return database;
-}
+    console.log("Connected successfully to server");
 
-export async function insertDocument(collectionName, document) {
-  const db = await connectDB();
+    const db = client.db(dbName);
 
-  // Add createdAt and modifiedAt fields
-  const timestamp = new Date();
-  document.createdAt = timestamp;
-  document.modifiedAt = timestamp;
-
-  const result = await db.collection(collectionName).insertOne(document);
-  return result;
-}
-
-export async function updateDocument(collectionName, id, updatedFields) {
-  const db = await connectDB();
-
-  // Update modifiedAt field
-  updatedFields.modifiedAt = new Date();
-
-  const result = await db.collection(collectionName).updateOne(
-    { _id: ObjectId(id) },
-    { $set: updatedFields }
-  );
-
-  return result;
-}
-
-export async function findAllDocuments(collectionName) {
-  const db = await connectDB();
-  const documents = await db.collection(collectionName).find().toArray();
-  return documents;
+    return db;
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    throw error;
+  }
 }

@@ -16,7 +16,7 @@ const Dropdown = () => {
   useEffect(() => {
     const data = getDataFromParent;
     setOptions(data);
-  }, [getDataFromParent]);
+  }, []);
 
   const handleDropdownFocus = () => {
     setIsOpen(true);

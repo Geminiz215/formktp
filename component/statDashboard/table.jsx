@@ -1,14 +1,21 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import Dropdown from "../Dropdown/down";
 
 export default function Table() {
   const [provinces, setProvinces] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [table, setTable] = useState([]);
 
-  const handleOptionChange = (value) => {
+  const handleOptionChange = async (value) => {
     setSelectedOption(value);
     setIsOpen(false);
+    try {
+      const response = await axios.get("/api/table");
+      console.log(response);
+    } catch (error) {
+      console.log("error :=>", error);
+    }
   };
 
   useEffect(() => {
@@ -20,12 +27,13 @@ export default function Table() {
       console.log("error :=>", error);
     }
   }, []);
+
   const handleDropdownFocus = () => {
     setIsOpen(true);
   };
 
   return (
-    <div class="shadow-md sm:rounded-lg">
+    <div className="shadow-md sm:rounded-lg">
       <div className={`inline-block text-left  mr-3 mb-3`}>
         <input
           type="text"
@@ -63,18 +71,18 @@ export default function Table() {
         )}
       </div>
 
-      <table class="w-full text-sm text-left rtl:text-right min-w-full text-gray-500 dark:text-gray-400 sm:rounded-lg">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-sm text-left rtl:text-right min-w-full text-gray-500 dark:text-gray-400 sm:rounded-lg">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="px-4 py-3">
+            <th scope="col" className="px-4 py-3">
               Kabupaten
             </th>
-            <th scope="col" class="px-4 py-3">
-              <div class="flex items-center">
+            <th scope="col" className="px-4 py-3">
+              <div className="flex items-center">
                 Total
                 <a href="#">
                   <svg
-                    class="w-3 h-3 ms-1.5"
+                    className="w-3 h-3 ms-1.5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -88,34 +96,34 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th
               scope="row"
-              class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
               Apple MacBook Pro 17"
             </th>
-            <td class="px-4 py-4">$2999</td>
+            <td className="px-4 py-4">$2999</td>
           </tr>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th
               scope="row"
-              class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
               Microsoft Surface Pro
             </th>
 
-            <td class="px-4 py-4">$1999</td>
+            <td className="px-4 py-4">$1999</td>
           </tr>
-          <tr class="bg-white dark:bg-gray-800">
+          <tr className="bg-white dark:bg-gray-800">
             <th
               scope="row"
-              class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
               Magic Mouse 2
             </th>
 
-            <td class="px-4 py-4">$99</td>
+            <td className="px-4 py-4">$99</td>
           </tr>
         </tbody>
       </table>
