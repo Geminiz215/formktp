@@ -1,22 +1,36 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function Table() {
+export default function Table({ table, reqTable }) {
   const [provinces, setProvinces] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [table, setTable] = useState([]);
+  const [mytable, setTable] = useState([]);
+  const [sort, setSort] = useState(-1);
 
   const handleOptionChange = async (value) => {
-    setSelectedOption(value);
     setIsOpen(false);
-    try {
-      const response = await axios.get("/api/table");
-      console.log(response);
-    } catch (error) {
-      console.log("error :=>", error);
-    }
+    setSelectedOption(value.name);
+    let req = {
+      provinces: value.name,
+      sort: sort,
+    };
+    reqTable(req);
   };
+
+  const handleSort = async () => {
+    setSort(sort === 1 ? -1 : 1);
+    let req = {
+      provinces: selectedOption,
+      sort: sort === 1 ? -1 : 1,
+    };
+    reqTable(req);
+  };
+
+  useEffect(() => {
+    const data = table;
+    setTable(data);
+  }, [table]);
 
   useEffect(() => {
     try {
@@ -55,7 +69,7 @@ export default function Table() {
                 key={index}
                 className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
                 role="menuitem"
-                onClick={() => handleOptionChange(option.name)}
+                onClick={() => handleOptionChange(option)}
               >
                 <input
                   type="radio"
@@ -80,7 +94,7 @@ export default function Table() {
             <th scope="col" className="px-4 py-3">
               <div className="flex items-center">
                 Total
-                <a href="#">
+                <a onClick={handleSort}>
                   <svg
                     className="w-3 h-3 ms-1.5"
                     aria-hidden="true"
@@ -96,35 +110,17 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th
-              scope="row"
-              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Apple MacBook Pro 17"
-            </th>
-            <td className="px-4 py-4">$2999</td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th
-              scope="row"
-              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Microsoft Surface Pro
-            </th>
-
-            <td className="px-4 py-4">$1999</td>
-          </tr>
-          <tr className="bg-white dark:bg-gray-800">
-            <th
-              scope="row"
-              className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Magic Mouse 2
-            </th>
-
-            <td className="px-4 py-4">$99</td>
-          </tr>
+          {mytable.map((item) => (
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {item._id ? item._id : "Other"}
+              </th>
+              <td className="px-4 py-4">{item.totalQuantity}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
