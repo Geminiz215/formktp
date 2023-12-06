@@ -6,7 +6,7 @@ export default async function connectDB() {
   const dbName = process.env.MONGODB_DB;
 
   try {
-    const client = await MongoClient.connect(url, { useNewUrlParser: true });
+    const client = await MongoClient.connect(url);
 
     console.log("Connected successfully to server");
 

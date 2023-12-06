@@ -4,8 +4,6 @@ let collectionName1 = "pendukung";
 
 export async function insertDocument(document) {
   const db = await connectDB();
-
-  // Add createdAt and modifiedAt fields
   const timestamp = new Date();
   document.createdAt = timestamp;
   document.modifiedAt = timestamp;
@@ -66,24 +64,9 @@ export async function GroupByKabupaten(provinsi, sort) {
 
 export async function GroupByProvinsi(startDate, endDate) {
   const db = await connectDB();
-  const pipeline = [
-    {
-      $group: {
-        _id: "$provinsi",
-        totalQuantity: { $sum: 1 },
-      },
-    },
-  ];
-
-  pipeline.push({
-    $sort: {
-      totalQuantity: sort === 1 ? 1 : -1,
-    },
-  });
-
-  pipeline.push({
-    $limit: 8,
-  });
+  const matchStage = {
+    $match: {},
+  };
 
   if (
     startDate !== null &&
@@ -91,18 +74,42 @@ export async function GroupByProvinsi(startDate, endDate) {
     endDate !== null &&
     endDate !== undefined
   ) {
-    try {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      pipeline.unshift({
-        $match: {
-          $and: [{ startDate: { $gte: start } }, { endDate: { $lte: end } }],
-        },
-      });
-    } catch (error) {
-      return error;
-    }
+    matchStage.$match.yourDateField = {
+      $gte: new Date(startDate),
+      $lte: new Date(endDate),
+    };
   }
+
+  const pipeline = [
+    matchStage,
+    {
+      $project: {
+        provinsi: {
+          $cond: {
+            if: {
+              $or: [{ $eq: ["$provinsi", ""] }, { $eq: ["$provinsi", null] }],
+            },
+            then: "other",
+            else: "$provinsi",
+          },
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$provinsi",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: {
+        count: -1,
+      },
+    },
+    {
+      $limit: 8,
+    },
+  ];
 
   const documents = await db
     .collection(collectionName1)
@@ -172,5 +179,70 @@ export async function GetDataCounts() {
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Internal Server Error");
+  }
+}
+
+export async function GroupByAgeRange() {
+  const pipeline = [
+    {
+      $project: {
+        tanggal_lahir: 1, // Ganti nama_field_umur dengan nama field umur pada dokumen Anda
+      },
+    },
+    {
+      $addFields: {
+        age: {
+          $divide: [
+            {
+              $subtract: [new Date(), "$tanggal_lahir"],
+            },
+            31536000000, // Jumlah milidetik dalam satu tahun
+          ],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          $switch: {
+            branches: [
+              {
+                case: {
+                  $and: [{ $gte: ["$age", 17] }, { $lte: ["$age", 25] }],
+                },
+                then: "17-25 tahun",
+              },
+              {
+                case: {
+                  $and: [{ $gte: ["$age", 26] }, { $lte: ["$age", 35] }],
+                },
+                then: "26-35 tahun",
+              },
+              {
+                case: {
+                  $and: [{ $gte: ["$age", 36] }, { $lte: ["$age", 50] }],
+                },
+                then: "36-50 tahun",
+              },
+              { case: { $gte: ["$age", 51] }, then: "Di atas 50 tahun" },
+            ],
+            default: "Umur tidak valid", // Ganti dengan nilai default yang sesuai
+          },
+        },
+        count: { $sum: 1 },
+      },
+    },
+  ];
+
+  try {
+    const db = await connectDB();
+    const documents = await db
+      .collection(collectionName1)
+      .aggregate(pipeline)
+      .toArray();
+    return documents;
+  } catch (error) {
+    console.error("Error in aggregation:", error);
+    throw error;
   }
 }

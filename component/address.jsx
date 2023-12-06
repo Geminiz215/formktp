@@ -2,11 +2,20 @@
 
 import React, { Fragment, useEffect, useState } from "react";
 import RecommendInput from "./Dropdown/recommendList";
+import { useFormikContext } from "formik";
 
-function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
+function ProvinceCityDistrictForm({
+  Province,
+  Kabupaten,
+  Kecamatan,
+  provError,
+  kabError,
+  KecError,
+}) {
   const [provinces, setProvinces] = useState([]);
-  const [city, setCity] = useState([]);
   const [kab, setKab] = useState([]);
+  const [kecamatan, setKecamatan] = useState([]);
+  const { setFieldValue, values } = useFormikContext();
 
   useEffect(() => {
     try {
@@ -19,33 +28,33 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
   }, []);
 
   const handleProvinciesChange = (value) => {
-    setProvince(value);
+    setFieldValue(Province, value);
     for (let index = 0; index < provinces.length; index++) {
       if (provinces[index].name === value) {
         fetch(
           `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinces[index].id}.json`
         )
           .then((response) => response.json())
-          .then((regencies) => setCity(regencies));
+          .then((regencies) => setKab(regencies));
       }
     }
   };
 
-  const handleCityChange = (value) => {
-    setDesa(value);
-    for (let index = 0; index < city.length; index++) {
-      if (city[index].name === value) {
+  const handleKabupatenChange = (value) => {
+    setFieldValue(Kabupaten, value);
+    for (let index = 0; index < kab.length; index++) {
+      if (kab[index].name === value) {
         fetch(
-          `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${city[index].id}.json`
+          `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${kab[index].id}.json`
         )
           .then((response) => response.json())
-          .then((districts) => setKab(districts));
+          .then((districts) => setKecamatan(districts));
       }
     }
   };
 
-  const handleKabChange = (value) => {
-    setKabupaten(value);
+  const handleKecChange = (value) => {
+    setFieldValue(Kecamatan, value);
   };
 
   return (
@@ -55,16 +64,25 @@ function ProvinceCityDistrictForm({ setProvince, setKabupaten, setDesa }) {
         sendDataToParent={handleProvinciesChange}
         text={"Provinsi"}
       />
+      <p id="helper-text-explanation" className="text-xs text-red-500">
+        {provError ? <div>{"please finish form"}</div> : null}
+      </p>
       <RecommendInput
-        sendDataToParent={handleCityChange}
-        getDataFromParent={city}
+        sendDataToParent={handleKabupatenChange}
+        getDataFromParent={kab}
         text={"Kabupaten"}
       />
+      <p id="helper-text-explanation" className="text-xs text-red-500">
+        {kabError ? <div>{"please finish form"}</div> : null}
+      </p>
       <RecommendInput
-        sendDataToParent={handleKabChange}
-        getDataFromParent={kab}
+        sendDataToParent={handleKecChange}
+        getDataFromParent={kecamatan}
         text={"Kecamatan"}
       />
+      <p id="helper-text-explanation" className="text-xs text-red-500">
+        {KecError ? <div>{"please finish form"}</div> : null}
+      </p>
     </div>
   );
 }

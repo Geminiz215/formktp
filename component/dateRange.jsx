@@ -4,17 +4,21 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "tailwindcss/tailwind.css"; // Include the Tailwind CSS styles
 
-const DateRange = () => {
+const DateRange = ({ filterDate }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const handleCalendarClose = () => console.log("Calendar closed");
-  const handleCalendarOpen = () => console.log("Calendar opened");
+  // const handleCalendarClose = () => console.log("Calendar closed");
+  // const handleCalendarOpen = () => console.log("Calendar opened");
 
   const handleDateChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+    filterDate({
+      start: start,
+      end: end,
+    });
   };
 
   return (

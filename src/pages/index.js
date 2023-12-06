@@ -1,12 +1,12 @@
-import Index from '../../component/form'
-import Navbar from '../../component/navbar'
-import { Fragment } from 'react'
-
+import Index from "../../component/form";
+import FormFormik from "../../component/formFormik";
+import Navbar from "../../component/navbar";
+import { Fragment } from "react";
 
 export default function Home() {
   return (
     <Fragment>
-      <Index/>
+      <FormFormik />
     </Fragment>
-  )
+  );
 }

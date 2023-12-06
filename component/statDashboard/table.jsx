@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import RecommendInput from "../Dropdown/recommendList";
 
 export default function Table({ table, reqTable }) {
   const [provinces, setProvinces] = useState([]);
@@ -9,12 +10,15 @@ export default function Table({ table, reqTable }) {
   const [sort, setSort] = useState(-1);
 
   const handleOptionChange = async (value) => {
+    let req = {};
     setIsOpen(false);
-    setSelectedOption(value.name);
-    let req = {
-      provinces: value.name,
+
+    setSelectedOption(value);
+    req = {
+      provinces: value,
       sort: sort,
     };
+
     reqTable(req);
   };
 
@@ -42,47 +46,14 @@ export default function Table({ table, reqTable }) {
     }
   }, []);
 
-  const handleDropdownFocus = () => {
-    setIsOpen(true);
-  };
-
   return (
     <div className="shadow-md sm:rounded-lg">
       <div className={`inline-block text-left  mr-3 mb-3`}>
-        <input
-          type="text"
-          className="inline-flex justify-center rounded-md w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          id="options-menu"
-          value={selectedOption || "Select an option"}
-          onFocus={handleDropdownFocus}
+        <RecommendInput
+          getDataFromParent={provinces}
+          sendDataToParent={handleOptionChange}
+          text={"Provinsi"}
         />
-
-        {isOpen && (
-          <div
-            className="absolute w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            {provinces.map((option, index) => (
-              <div
-                key={index}
-                className="px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
-                role="menuitem"
-                onClick={() => handleOptionChange(option)}
-              >
-                <input
-                  type="radio"
-                  id={option.name}
-                  name="options"
-                  value={option.name}
-                  className="mr-2"
-                />
-                <label htmlFor={option.name}>{option.name}</label>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       <table className="w-full text-sm text-left rtl:text-right min-w-full text-gray-500 dark:text-gray-400 sm:rounded-lg">
@@ -110,8 +81,11 @@ export default function Table({ table, reqTable }) {
           </tr>
         </thead>
         <tbody>
-          {mytable.map((item) => (
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          {mytable.map((item, i) => (
+            <tr
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              key={i}
+            >
               <th
                 scope="row"
                 className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"

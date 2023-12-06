@@ -65,7 +65,6 @@ const RecommendInput = ({ sendDataToParent, getDataFromParent, text }) => {
         onFocus={handleInputFocus}
         className="border border-gray-300 p-2 w-full mb-2"
         disabled={allRecommendations.length === 0}
-        required
       />
       {showRecommendations && (
         <RecommendationList

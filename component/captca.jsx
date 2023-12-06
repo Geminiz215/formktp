@@ -1,72 +1,28 @@
-// pages/captcha.js
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { useFormikContext } from "formik";
 
-const CaptchaPage = () => {
-  const [captcha, setCaptcha] = useState(generateCaptcha());
-  const [userAnswer, setUserAnswer] = useState("");
-  const [message, setMessage] = useState("");
+const Captcha = ({ name }) => {
+  const [token, setToken] = useState(null);
+  const captchaRef = useRef(null);
+  const { setFieldValue, values } = useFormikContext();
 
-  function generateCaptcha() {
-    const num1 = getRandomNumber(1, 10);
-    const num2 = getRandomNumber(1, 10);
-    const answer = num1 + num2;
+  const onLoad = () => {
+    captchaRef.current.execute();
+  };
 
-    return {
-      expression: `${num1} + ${num2} =`,
-      answer: answer.toString(),
-    };
-  }
-
-  function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function refreshCaptcha() {
-    setUserAnswer("");
-    setCaptcha(generateCaptcha());
-  }
-
-  function validateCaptcha() {
-    if (userAnswer === captcha.answer) {
-      setMessage("CAPTCHA is correct! Proceed with your action.");
-      refreshCaptcha();
-    } else {
-      setMessage("CAPTCHA is incorrect. Please try again.");
-      refreshCaptcha();
-    }
-  }
+  useEffect(() => {
+    setFieldValue(name, token);
+  }, [token]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md">
-        <div className="mb-6 text-xl font-semibold">CAPTCHA Verification</div>
-        <div className="mb-4">
-          <div className="text-lg">{captcha.expression}</div>
-          <input
-            type="text"
-            value={userAnswer}
-            onChange={(e) => setUserAnswer(e.target.value)}
-            className="mt-2 p-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={validateCaptcha}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
-          <button
-            onClick={refreshCaptcha}
-            className="text-blue-500 underline cursor-pointer"
-          >
-            Refresh CAPTCHA
-          </button>
-        </div>
-        {message && <div className="mt-4 text-red-500">{message}</div>}
-      </div>
-    </div>
+    <HCaptcha
+      sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+      onLoad={onLoad}
+      onVerify={setToken}
+      ref={captchaRef}
+    />
   );
 };
 
-export default CaptchaPage;
+export default Captcha;
