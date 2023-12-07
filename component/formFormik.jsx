@@ -13,6 +13,12 @@ import Captcha from "./captca";
 
 const FormFormik = () => {
   const router = useRouter();
+  const { code } = router.query;
+
+  useEffect(() => {
+    console.log(code);
+  }, [code]);
+
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, "Too Short!")
@@ -62,7 +68,7 @@ const FormFormik = () => {
           name: "",
           email: "",
           phone: "",
-          referral: "",
+          referral: code || "",
           nik: "",
           tangal_lahir: "",
           jenis_kelamin: "",
@@ -71,12 +77,13 @@ const FormFormik = () => {
           kecamatan: "",
           captcha: "",
         }}
+        enableReinitialize={true}
         validationSchema={SignupSchema}
         onSubmit={(values) => {
           handleSubmit(values);
         }}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, touched }) => (
           <Form>
             <div className="mb-4">
               <div className="relative z-0 w-full mb-6 group">
@@ -132,7 +139,6 @@ const FormFormik = () => {
                   name="referral"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 />
-
                 {errors.referral ? (
                   <p className="mt-2 text-sm text-red-500">{errors.referral}</p>
                 ) : null}

@@ -1,11 +1,10 @@
 // pages/user/[id].js
 import { useRouter } from "next/router";
 import Index from "../../../component/form";
+import FormFormik from "../../../component/formFormik";
 
 const UserProfile = () => {
-  const router = useRouter();
-  const { code } = router.query;
-  return <Index referral={code} />;
+  return <FormFormik />;
 };
 
 export default UserProfile;
