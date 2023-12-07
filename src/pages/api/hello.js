@@ -28,6 +28,7 @@ export default async function handler(req, res) {
         captcha,
       } = req.body;
 
+      console.log(tanggal_lahir);
       const response = await hCaptcha.verify(
         process.env.HCAPTCHA_SECRET_KEY,
         captcha

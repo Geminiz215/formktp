@@ -10,7 +10,7 @@ const SignupSchema = Yup.object().shape({
   phone: Yup.string().matches(/[1-9]\d{11,13}/, "Phone number is not valid"),
   email: Yup.string().email("Invalid email").required("Required"),
   nik: Yup.string().matches(/^\d{16,16}/, "Phone number is not valid"),
-  tangal_lahir: Yup.date()
+  tanggal_lahir: Yup.date()
     .required("Date of birth is required")
     .max(new Date(), "Date of birth cannot be in the future"),
   jenis_kelamin: Yup.string()
@@ -30,7 +30,7 @@ const ValidationSchemaExample = () => (
         phone: "",
         referral: "",
         nik: "",
-        tangal_lahir: "",
+        tanggal_lahir: "",
         jenis_kelamin: "",
         provinsi: "",
         kabupaten: "",

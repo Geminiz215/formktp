@@ -6,9 +6,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ProvinceCityDistrictForm from "./address";
-import Gender from "./gender";
 import DatePickerComponent from "./dateForm";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 import Captcha from "./captca";
 
 const FormFormik = () => {
@@ -31,7 +29,7 @@ const FormFormik = () => {
     nik: Yup.string()
       .matches(/^\d{16}$/, "NIK must be a 16-digit number")
       .required("NIK is required"),
-    tangal_lahir: Yup.string().required("Date of birth is required"),
+    tanggal_lahir: Yup.string().required("Date of birth is required"),
     jenis_kelamin: Yup.string()
       .required("Gender is required")
       .oneOf(["male", "female", "nonbinary", "other"], "Invalid gender"),
@@ -70,7 +68,7 @@ const FormFormik = () => {
           phone: "",
           referral: code || "",
           nik: "",
-          tangal_lahir: "",
+          tanggal_lahir: "",
           jenis_kelamin: "",
           provinsi: "",
           kabupaten: "",
@@ -216,10 +214,10 @@ const FormFormik = () => {
               ) : null}
             </div>
             <DatePickerComponent
-              name="tangal_lahir"
+              name="tanggal_lahir"
               className=" mb-4 p-2 border rounded-md w-full"
             />
-            {errors.tangal_lahir ? (
+            {errors.tanggal_lahir ? (
               <p
                 id="helper-text-explanation"
                 className="mt-2 text-xs text-red-500"

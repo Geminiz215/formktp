@@ -4,7 +4,6 @@ import Datepicker from "react-tailwindcss-datepicker";
 
 const DatePickerComponent = ({ name }) => {
   const { setFieldValue, values } = useFormikContext();
-
   const value = getIn(values, name);
   return (
     <div className="">
